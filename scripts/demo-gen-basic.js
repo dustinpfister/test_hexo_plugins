@@ -5,7 +5,7 @@
 */
 
 
-hexo.extend.generator.register('sitemap', function (locals) {
+hexo.extend.generator.register('gen-basic', function (locals) {
 
     return {
 
