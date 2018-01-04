@@ -33,13 +33,20 @@ hexo.extend.generator.register('report', function (locals) {
     site.wordCounts.p = 0;
     site.wordCounts.h1 = 0;
     site.wordCounts.h2 = 0;
+    site.wordCounts.h3 = 0;
+    site.wordCounts.h4 = 0;
+    site.wordCounts.h5 = 0;
+    site.wordCounts.h6 = 0;
 
     // tabulate for all posts
     locals.posts.forEach(function (post) {
 
         tabWC(post.content, 'p');
-        tabWC(post.content, 'h1');
-        tabWC(post.content, 'h2');
+        let h = 1;
+        while (h < 7) {
+            tabWC(post.content, 'h' + h);
+            h += 1;
+        }
 
     });
 
