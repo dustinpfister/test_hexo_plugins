@@ -40,22 +40,12 @@ hexo.extend.generator.register('report', function (locals) {
     site.wordCounts.h5 = 0;
     site.wordCounts.h6 = 0;
 
-    /*
-    // tabulate for all posts
-    locals.posts.forEach(function (post) {
-
-    tabWC(post.content, 'p');
-    let h = 1;
-    while (h < 7) {
-    tabWC(post.content, 'h' + h);
-    h += 1;
-    }
-
-    });
-     */
-
+    // update site object on a per post basis
+    // and create a posts object that will be returned
+    // to create paths on a for post basis
     let posts = locals.posts.map(function (post) {
 
+            // tabulate site word count totals
             tabWC(post.content, 'p');
             let h = 1;
             while (h < 7) {
@@ -63,38 +53,33 @@ hexo.extend.generator.register('report', function (locals) {
                 h += 1;
             }
 
+            // return object for post
             return {
 
                 path: path.join('reports', post.path),
                 data: _.merge({
-                    foo: 'bar'
+                    foo: 'bar',
+                    post_path: post.path
                 }, locals),
-                layout: ['report']
+                layout: ['report_post']
 
             }
 
         });
 
-    // set data to be used in the template
-    //locals.data.report = true;
-    //locals.data.site = site;
 
-    return [
+    return _.concat(posts, {
 
-        // index
-        {
+        path: 'reports/index.html',
+        data: _.merge(locals, {
+            data: {
+                report: false,
+                site: site
+            }
+        }),
+        layout: ['report']
 
-            path: 'reports/index.html',
-            data: _.merge(locals,{
-                data: {
-                    report: false,
-                    site: site
-                }
-            }),
-            layout: ['report']
+    });
 
-        }
-
-    ];
 
 });
