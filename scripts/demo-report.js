@@ -26,6 +26,8 @@ hexo.extend.generator.register('report', function (locals) {
 
         }
 
+        return count;
+
     };
 
     // site wide defaults
@@ -39,6 +41,7 @@ hexo.extend.generator.register('report', function (locals) {
     site.wordCounts.h4 = 0;
     site.wordCounts.h5 = 0;
     site.wordCounts.h6 = 0;
+    site.wordCounts.posts = [];
 
     // update site object on a per post basis
     // and create a posts object that will be returned
@@ -46,23 +49,38 @@ hexo.extend.generator.register('report', function (locals) {
     let posts = locals.posts.map(function (post) {
 
             // tabulate site word count totals
-            tabWC(post.content, 'p');
+            let ct = {
+                total: 0
+            };
+            ct.p = tabWC(post.content, 'p');
+            ct.total += ct.p
+
             let h = 1;
             while (h < 7) {
-                tabWC(post.content, 'h' + h);
+                ct['h' + h] = tabWC(post.content, 'h' + h);
+                ct.total += ct['h' + h];
                 h += 1;
             }
+
+            site.wordCounts.posts.push({
+
+                path: post.path,
+                title: post.title,
+                ct: ct
+
+            });
 
             // return object for post
             return {
 
                 path: path.join('reports', post.path),
-                data: _.merge({},locals, {
+                data: _.merge({}, locals, {
                     data: {
                         report: true,
                         post_path: post.path,
                         site: site,
-                        foo: 'this should be there'
+                        ct: ct
+
                     }
                 }),
                 layout: ['report_post']
@@ -74,12 +92,12 @@ hexo.extend.generator.register('report', function (locals) {
     return _.concat(posts, {
 
         path: 'reports/index.html',
-        data: _.merge(locals, {
+        data: _.merge(locals, {}, {
             data: {
                 report: false,
                 site: site,
                 post_path: true,
-                foo: 'bar'
+                foo: ''
             }
         }),
         layout: ['report']

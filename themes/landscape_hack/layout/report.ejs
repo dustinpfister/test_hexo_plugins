@@ -23,9 +23,22 @@
     <div style="padding:15px; border:1px solid #000000;margin-top:20px;">
         <h2 class="article-title">Each Post:</h2>
         <br>
-        <% site.posts.forEach(function(post){ %>
 
-            <a href="<%= 'reports/' + post.path %>"><%= post.title %></a><br>
+        <%
+
+            // sort by total world count
+            let postData = page.data.site.wordCounts.posts;
+
+            postData.sort(function(a,b){
+
+                return b.ct.total - a.ct.total;
+
+            });
+
+        %>
+        <% postData.forEach(function(post){ %>
+
+            <a href="<%= 'reports/' + post.path %>"><%= post.title %></a> <%= post.ct.total%><br>
 
         <% }); %>
     </div>
