@@ -6,7 +6,8 @@
 
     <!-- Site report -->
     <div style="padding:15px; border:1px solid #000000;">
-        <h2>Site wide report: </h2>
+        <h2 class="article-title">Site wide report: </h2>
+        <br>
         <p>This is a site wide report come on</p>
         <h3>Word Totals:</h3>
         <ul style="margin-left:50px;">
@@ -19,10 +20,14 @@
         </ul>
     </div>
 
-    <% site.posts.forEach(function(post){ %>
-	
-	    <a href="<%= 'reports/' + post.path %>">post</a>
-	
-    <% }); %>
+    <div style="padding:15px; border:1px solid #000000;margin-top:20px;">
+        <h2 class="article-title">Each Post:</h2>
+        <br>
+        <% site.posts.forEach(function(post){ %>
+
+            <a href="<%= 'reports/' + post.path %>"><%= post.title %></a><br>
+
+        <% }); %>
+    </div>
 
 </div>
