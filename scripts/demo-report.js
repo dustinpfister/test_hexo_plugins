@@ -4,7 +4,9 @@ generate a report on posts
 
  */
 
-let cheerio = require('cheerio');
+let cheerio = require('cheerio'),
+_ = require('lodash'),
+path = require('path');
 
 hexo.extend.generator.register('report', function (locals) {
 
@@ -38,21 +40,44 @@ hexo.extend.generator.register('report', function (locals) {
     site.wordCounts.h5 = 0;
     site.wordCounts.h6 = 0;
 
+    /*
     // tabulate for all posts
     locals.posts.forEach(function (post) {
 
-        tabWC(post.content, 'p');
-        let h = 1;
-        while (h < 7) {
-            tabWC(post.content, 'h' + h);
-            h += 1;
-        }
+    tabWC(post.content, 'p');
+    let h = 1;
+    while (h < 7) {
+    tabWC(post.content, 'h' + h);
+    h += 1;
+    }
 
     });
+     */
+
+    let posts = locals.posts.map(function (post) {
+
+            tabWC(post.content, 'p');
+            let h = 1;
+            while (h < 7) {
+                tabWC(post.content, 'h' + h);
+                h += 1;
+            }
+
+            return {
+
+                path: path.join('reports', post.path),
+                data: _.merge({
+                    foo: 'bar'
+                }, locals),
+                layout: ['report']
+
+            }
+
+        });
 
     // set data to be used in the template
-    locals.data.report = true;
-    locals.data.site = site;
+    //locals.data.report = true;
+    //locals.data.site = site;
 
     return [
 
@@ -60,7 +85,12 @@ hexo.extend.generator.register('report', function (locals) {
         {
 
             path: 'reports/index.html',
-            data: locals,
+            data: _.merge(locals,{
+                data: {
+                    report: false,
+                    site: site
+                }
+            }),
             layout: ['report']
 
         }
