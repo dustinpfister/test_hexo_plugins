@@ -7,9 +7,10 @@ generate with data from posts
 
 hexo.extend.generator.register('gen-with-posts-layout', function (locals) {
 
-    console.log(locals);
-
+    // this is a report
     locals.data.report = true;
+	
+	// site totals
 
     return [{
 

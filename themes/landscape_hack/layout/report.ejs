@@ -1,1 +1,14 @@
-<h1>I am a report</h1>
+<h1>Report</h1>
+<p>report: <%= page.data.report %></p>
+
+<!-- Site report -->
+<div style="background: #ff0000;padding:15px;">
+    <h2>Site wide report: </h2>
+    <p>Word Totals:</p>
+    <ul style="margin-left:50px;">
+        <li>grand total: <%= page.data.site.wordCounts.total %></li>
+        <li>total words (p elements): <%= page.data.site.wordCounts.p %></li>
+        <li>total words (h1 elements): <%= page.data.site.wordCounts.h1 %></li>
+        <li>total words (h2 elements): <%= page.data.site.wordCounts.h2 %></li>
+    </ul>
+</div>
