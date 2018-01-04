@@ -54,7 +54,10 @@ hexo.extend.generator.register('report', function (locals) {
     locals.data.report = true;
     locals.data.site = site;
 
-    return [{
+    return [
+
+        // index
+        {
 
             path: 'reports/index.html',
             data: locals,
