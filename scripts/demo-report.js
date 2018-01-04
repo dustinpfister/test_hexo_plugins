@@ -57,16 +57,19 @@ hexo.extend.generator.register('report', function (locals) {
             return {
 
                 path: path.join('reports', post.path),
-                data: _.merge({
-                    foo: 'bar',
-                    post_path: post.path
-                }, locals),
+                data: _.merge({},locals, {
+                    data: {
+                        report: true,
+                        post_path: post.path,
+                        site: site,
+                        foo: 'this should be there'
+                    }
+                }),
                 layout: ['report_post']
 
             }
 
         });
-
 
     return _.concat(posts, {
 
@@ -74,12 +77,13 @@ hexo.extend.generator.register('report', function (locals) {
         data: _.merge(locals, {
             data: {
                 report: false,
-                site: site
+                site: site,
+                post_path: true,
+                foo: 'bar'
             }
         }),
         layout: ['report']
 
     });
-
 
 });
