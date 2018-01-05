@@ -15,6 +15,6 @@
     "hexo-renderer-stylus": "^0.3.1",
     "hexo-renderer-marked": "^0.3.0",
     "hexo-server": "^0.2.0",
-    "hexo-first": "^0.0.0"
+    "hexo-forframe": "^0.0.0"
   }
 }

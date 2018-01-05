@@ -3,6 +3,7 @@ menu:
   Home: /
   Archives: /archives
   Reports: /reports
+  forFrame: /forframe
 rss: /atom.xml
 
 # Content
