@@ -1,6 +1,19 @@
+<%
+
+   let data = page.data || {};
+   
+   data.foo = data.foo || 'no foo';
+   data.message = data.message || 'no message';
+
+%>
 
 <div style="padding:20px;">
 
     <h1>For Frame:</h1>
+    <p>Animations that are made on a for frame basis</p>
+	
+    <%= data.message %><br>
+    <%= data.files %><br>
+
 
 </div>
